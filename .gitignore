@@ -1,0 +1,10 @@
+box_score_urls/
+
+urls.py
+
+config.json
+
+*.pyc 
+__pycache__/
+
+.DS_Store
