@@ -10,7 +10,7 @@ with open('config.json', 'r') as config_file:
 app = Flask(__name__)
 CORS(app)
 
-db_url = f'postgresql://{config["db_user"]}:{config["db_password"]}@{config["db_host"]}:{config["db_port"]}/{config["db_name"]}'
+db_url = f'postgresql://{config["username"]}:{config["pwd"]}@{config["hostname"]}:{config["port_id"]}/{config["database"]}'
 app.config['SQLALCHEMY_DATABASE_URI'] = db_url
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 

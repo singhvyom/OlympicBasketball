@@ -3,7 +3,7 @@ from config import app, db
 from models import Olympics, Teams, Players, PlayerTeam, Games, BoxScores, TeamStats, Medals
 
 
-app.route('/')
+@app.route('/')
 def home():
     #we will display the top 3 teams with the most medals
     #with designations for gold, silver, and bronze
@@ -56,17 +56,17 @@ def home():
     return jsonify(response)
 
 
-app.route('/box_scores', methods=['GET'])
-def box_scores():
-    return 'This is the box scores route'
+# app.route('/box_scores', methods=['GET'])
+# def box_scores():
+#     return 'This is the box scores route'
 
-app.route('/stat_leaders', methods=['GET'])
-def stat_leaders():
-    return 'This is the stat leaders route'
+# app.route('/stat_leaders', methods=['GET'])
+# def stat_leaders():
+#     return 'This is the stat leaders route'
 
-app.route('/team_stats', methods=['GET'])
-def team_stats():
-    return 'This is the team stats route'
+# app.route('/team_stats', methods=['GET'])
+# def team_stats():
+#     return 'This is the team stats route'
 
 if __name__ == '__main__':
     with app.app_context():
