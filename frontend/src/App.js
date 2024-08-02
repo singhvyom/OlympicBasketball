@@ -1,6 +1,7 @@
-import logo from './logo.svg';
 import React, { useState, useEffect } from 'react';
 import './App.css';
+import NavBar from './components/NavBar';
+import olympicrings from './assets/images/olympicrings.avif';
 
 function App() {
   const [top_teams, set_teams] = useState([]);
@@ -19,6 +20,13 @@ function App() {
 
   return (
     <div>
+    <NavBar /> 
+    <header className='page-header'>
+      <img src={olympicrings} className="App-logo" alt="logo" />
+      <p>
+        Welcome to the Olympic Basketball Database!
+      </p>
+    </header>
     <h1>Top Teams</h1>
     <ul>
       {top_teams.map((team, index) => (
@@ -27,7 +35,7 @@ function App() {
         </li>
       ))}
     </ul>
-    <h1>Top Players</h1>
+    <h1>ALl Time Points Leaders</h1>
     <ul>
       {top_players.map((player, index) => (
         <li key={index}>
