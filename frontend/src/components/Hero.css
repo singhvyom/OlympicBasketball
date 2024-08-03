@@ -1,0 +1,30 @@
+.hero-container {
+    background: url('../assets/images/LePhoto.png') 
+        center center/cover no-repeat;
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    box-shadow: inset 0 0 0 1000px rgba(0, 0, 0, 0.2);
+    object-fit: contain;
+    color: white;
+    font-size: 1.8rem;
+
+}
+
+.year-text {
+    margin-top: 0rem;
+    margin-left: 2.5rem;
+    font-size: 2.2rem;
+    font-weight: bold;
+    color: gold;
+}
+
+
+.title {
+    font-weight: bold;
+    margin-top: 8rem;
+    width: 50%;
+    margin-left: 2rem;
+}
