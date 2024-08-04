@@ -1,10 +1,13 @@
 import React, {useState, useEffect} from 'react';
 import './Home.css';
 import Hero from '../components/Hero';
+import FolderList from '../components/FolderList';
 
 const HomePage = () => {
     const [top_teams, set_teams] = useState([]);
     const [top_players, set_players] = useState([]);
+    const [top_rebounders, set_rebounders] = useState([]);
+    const [top_passers, set_passers] = useState([]);
 
     useEffect(() => {
         fetchTeamsPlayers();
@@ -16,6 +19,9 @@ const HomePage = () => {
             const data = await response.json();
             set_teams(data.top_teams);
             set_players(data.top_players);
+            set_rebounders(data.top_rebounders);
+            set_passers(data.top_passers);
+
         } catch (error) {
             console.error('Error fetching data: ', error);
         }
@@ -24,14 +30,10 @@ const HomePage = () => {
     return (
         <div>
             <Hero />
-            <h1>Top Teams</h1>
-            <ul>
-                {top_teams.map((team, index) => (
-                    <li key={index}>
-                        {team.team}: {team.gold} Gold, {team.silver} Silver, {team.bronze} Bronze, Total Medals: {team.total_medals}
-                    </li>
-                ))}
-            </ul>
+            <h1>Top Olympic Basketball Teams</h1>
+            <div className='team-list'>
+                <FolderList top_teams={top_teams} />
+            </div>
             <h1>All Time Points Leaders</h1>
             <ul>
                 {top_players.map((player, index) => (

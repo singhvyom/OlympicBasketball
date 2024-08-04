@@ -27,7 +27,9 @@ def home():
     ).group_by(
         Teams.country_name
     ).order_by(
-        db.desc('total_medals')
+        db.desc('gold'),
+        db.desc('silver'),
+        db.desc('bronze'),
     ).limit(3).all()
     
 
@@ -40,6 +42,28 @@ def home():
         Players.player_name
     ).order_by(
         db.desc('total_points')
+    ).limit(5).all()
+
+    top_rebounders = db.session.query(
+        Players.player_name,
+        db.func.sum(BoxScores.total_rebounds).label('total_rebounds')
+    ).join(
+        BoxScores, Players.player_id == BoxScores.player_id
+    ).group_by(
+        Players.player_name
+    ).order_by(
+        db.desc('total_rebounds')
+    ).limit(5).all()
+
+    top_passers = db.session.query(
+        Players.player_name,
+        db.func.sum(BoxScores.assists).label('assists')
+    ).join(
+        BoxScores, Players.player_id == BoxScores.player_id
+    ).group_by(
+        Players.player_name
+    ).order_by(
+        db.desc('assists')
     ).limit(5).all()
 
     top_teams_dict = [{
@@ -55,10 +79,23 @@ def home():
         'total_points': player.total_points
     } for player in top_players]
 
+    top_rebounders_dict = [{
+        'player': player.player_name,
+        'total_rebounds': player.total_rebounds
+    } for player in top_rebounders]
+
+    top_passers_dict = [{
+        'player': player.player_name,
+        'assists': player.assists
+    } for player in top_passers]
+
     response = {
         'top_teams': top_teams_dict,
-        'top_players': top_players_dict
+        'top_players': top_players_dict,
+        'top_rebounders': top_rebounders_dict,
+        'top_passers': top_passers_dict
     }
+    
     return jsonify(response)
 
 
