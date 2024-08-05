@@ -1,6 +1,29 @@
-.team-list {
+.lists-container {
   display: flex;
+  margin-top: 20px;
+  padding: 0;
+}
+
+.team-list {
+  display: column;
   flex-wrap: wrap;
   justify-content: start;
+  margin-left: 20px;
+  width: 30%;
+}
+
+.player-list {
+    display: flex;
+    flex-direction: column;
+    margin-left: 0;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+  
+li{
+    padding: 8px 0;
 }
 
