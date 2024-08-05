@@ -3,6 +3,8 @@ import './Home.css';
 import Hero from '../components/Hero';
 import FolderList from '../components/FolderList';
 import ColorToggleButton from '../components/ColorToggleButton';
+import PointsTable from '../components/PointsTable';
+import {groupAData, groupBData, groupCData} from '../assets/Data';
 
 const HomePage = () => {
     const [top_teams, set_teams] = useState([]);
@@ -10,12 +12,19 @@ const HomePage = () => {
     const [top_rebounders, set_rebounders] = useState([]);
     const [top_passers, set_passers] = useState([]);
     const [alignment, setAlignment] = useState('points');
+    const [groupAlignment, setGroupAlignment] = useState('Group A');
 
     const buttons = [
         {value: 'points', label: 'Points'},
         {value: 'rebounds', label: 'Rebounds'},
         {value: 'assists', label: 'Assists'}
     ];
+
+    const groupLetters = [
+        {value: 'Group A', label: 'Group A'},
+        {value: 'Group B', label: 'Group B'},
+        {value: 'Group C', label: 'Group C'},
+    ]
 
     useEffect(() => {
         fetchTeamsPlayers();
@@ -39,6 +48,27 @@ const HomePage = () => {
         if (newAlignment != null){
             setAlignment(newAlignment);
         }
+    }
+
+    const handleGroupChange = (event, newGroupAlignment) => {
+        if (newGroupAlignment != null){
+            setGroupAlignment(newGroupAlignment);
+        }
+    }
+
+    let data;
+    switch(groupAlignment){
+        case 'Group A':
+            data = groupAData;
+            break;
+        case 'Group B':
+            data = groupBData;
+            break;
+        case 'Group C':
+            data = groupCData;
+            break;
+        default:
+            data = groupAData;
     }
 
     return (
@@ -75,8 +105,10 @@ const HomePage = () => {
 
                 <div className="points-table">
                     <h1>Points Table</h1>
+                    <ColorToggleButton alignment={groupAlignment} handleChange={handleGroupChange} buttons = {groupLetters} />
+                    <PointsTable data={data} />
                 </div>
-
+                
             </div>
         </div>
     )

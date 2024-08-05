@@ -5,63 +5,67 @@ import CardItem from './CardItem';
 function Cards(){
     return (
         <div className = 'cards'>
-            <h1>Pick a Year to View BoxScores</h1>
+            <h1>Pick a Year to View Scores</h1>
             <div className = 'cards__container'>
                 <div className = 'cards__wrapper'>
                     <ul className = 'cards__items'>
                         <CardItem
-                            src = '../assets/images/2024-Paris-Olympics.webp'
+                            src = {require('../assets/images/2024-Paris-Olympics.webp')}
                             text = '2024'
-                            label = 'Paris Olympics'
+                            label = 'Paris'
                             path = '/boxscores/2024'
                         />
                         <CardItem
-                            src = '../assets/images/2020-Tokyo-Olympics.jpeg'
+                            src = {require('../assets/images/2020-Tokyo-Olympics.jpeg')}
                             text = '2020'
-                            label = 'Tokyo Olympics'
-                            path = '/boxscores/2024'
+                            label = 'Tokyo'
+                            path = '/boxscores/2020'
                         />
                         <CardItem
-                            src = '../assets/images/2016-Rio-Olympics.jpeg'
+                            src = {require('../assets/images/2016-Rio-Olympics.jpeg')}
                             text = '2016'
-                            label = 'Rio de Janeiro Olympics'
-                            path = '/boxscores/2024'
+                            label = 'Rio de Janeiro'
+                            path = '/boxscores/2016'
                         />
+                    </ul>
+                    <ul className = 'cards__items'>
                         <CardItem
-                            src = '../assets/images/2012-London-Olympics.jpeg'
+                            src = {require('../assets/images/2012-London-Olympics.jpeg')}
                             text = '2012'
-                            label = 'London Olympics'
-                            path = '/boxscores/2024'
+                            label = 'London'
+                            path = '/boxscores/2012'
                         />
                         <CardItem
-                            src = '../assets/images/2008-Beijing-Olympics.avif'
+                            src = {require('../assets/images/2008-Beijing-Olympics.avif')}
                             text = '2008'
-                            label = 'Beijing Olympics'
-                            path = '/boxscores/2024'
+                            label = 'Beijing'
+                            path = '/boxscores/2008'
                         />
                         <CardItem
-                            src = '../assets/images/2004-Athens-Olympics.jpeg'
+                            src = {require('../assets/images/2004-Athens-Olympics.jpeg')}
                             text = '2004'
-                            label = 'Athens Olympics'
-                            path = '/boxscores/2024'
+                            label = 'Athens'
+                            path = '/boxscores/2004'
                         />
+                    </ul>
+                    <ul className = 'cards__items'>
                         <CardItem
-                            src = '../assets/images/2000-Sydney-Olympics.webp'
+                            src = {require('../assets/images/2000-Sydney-Olympics.webp')}
                             text = '2000'
-                            label = 'Sydney Olympics'
-                            path = '/boxscores/2024'
+                            label = 'Sydney'
+                            path = '/boxscores/2000'
                         />
                         <CardItem
-                            src = '../assets/images/1996-Atlanta-Olympics.webp'
+                            src = {require('../assets/images/1996-Atlanta-Olympics.webp')}
                             text = '1996'
-                            label = 'Atlanta Olympics'
-                            path = '/boxscores/2024'
+                            label = 'Atlanta'
+                            path = '/boxscores/1996'
                         />
                         <CardItem
-                            src = '../assets/images/1992-Barcelona-Olympics.avif'
+                            src = {require('../assets/images/1992-Barcelona-Olympics.avif')}
                             text = '1992'
-                            label = 'Barcelona Olympics'
-                            path = '/boxscores/2024'
+                            label = 'Barcelona'
+                            path = '/boxscores/1992'
                         />
                     </ul>
                 </div>
