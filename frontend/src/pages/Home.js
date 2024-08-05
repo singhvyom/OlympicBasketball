@@ -11,6 +11,12 @@ const HomePage = () => {
     const [top_passers, set_passers] = useState([]);
     const [alignment, setAlignment] = useState('points');
 
+    const buttons = [
+        {value: 'points', label: 'Points'},
+        {value: 'rebounds', label: 'Rebounds'},
+        {value: 'assists', label: 'Assists'}
+    ];
+
     useEffect(() => {
         fetchTeamsPlayers();
     }, []);
@@ -44,9 +50,10 @@ const HomePage = () => {
                     <h1>Top Teams</h1>
                     <FolderList top_teams={top_teams} />
                 </div>
+
                 <div className='player-list'>
                     <h1>All Time Leaders</h1>
-                    <ColorToggleButton alignment={alignment} handleChange={handleChange} />
+                    <ColorToggleButton alignment={alignment} handleChange={handleChange} buttons = {buttons} />
                     <ul>
                         {alignment === 'points' && top_players.map((player, index) => (
                             <li key={index}>
@@ -65,11 +72,14 @@ const HomePage = () => {
                         ))}
                     </ul>
                 </div>
+
+                <div className="points-table">
+                    <h1>Points Table</h1>
+                </div>
+
             </div>
         </div>
     )
-
-
 }
 
 export default HomePage;
