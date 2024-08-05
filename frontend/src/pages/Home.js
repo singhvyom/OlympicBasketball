@@ -41,7 +41,7 @@ const HomePage = () => {
             <div className = 'lists-container'>
                 
                 <div className='team-list'>
-                    <h1>Top Olympic Basketball Teams</h1>
+                    <h1>Top Teams</h1>
                     <FolderList top_teams={top_teams} />
                 </div>
                 <div className='player-list'>

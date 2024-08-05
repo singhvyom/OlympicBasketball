@@ -1,7 +1,7 @@
 .hero-container {
     background: url('../assets/images/LePhoto.png') 
         center center/cover no-repeat;
-    height: 100vh;
+    height: 80vh;
     width: 100%;
     display: flex;
     flex-direction: column;

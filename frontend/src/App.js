@@ -2,18 +2,24 @@ import React from 'react';
 import './App.css';
 import NavBar from './components/NavBar';
 import Home from './pages/Home';
-import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
+import BoxScores from './pages/BoxScores';
+import Stats from './pages/Stats';
+import Query from './pages/Query';
+import { Routes, Route} from 'react-router-dom';
 
 
 function App() {
   return (
     <>
-      <Router>
-        <NavBar />
-        <Routes>
+      
+      <NavBar />
+      <Routes>
           <Route path='/' element={<Home/>} />
-        </Routes>
-      </Router>
+          <Route path='/boxscores' element={<BoxScores/>} />
+          <Route path='/statleaders' element={<Stats/>} />
+          <Route path='/query' element={<Query/>} />
+      </Routes>
+      
     </>
   );
 }
