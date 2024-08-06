@@ -121,9 +121,9 @@ def box_scores(year):
             'Away Team': game.get('Away Team'),
             'Away Score': game.get('Away Score')
         })
-        
+
     #change when results for 2024 are available
-    if(year != 2024):
+    if year != 2024:
         medal_results = db.session.query(
             Medals.gold,
             Medals.silver,
@@ -131,8 +131,16 @@ def box_scores(year):
         ).filter(
             Medals.year == year
         ).first()
+    
+        
+        medal_results_dict = {
+            'gold': medal_results.gold,
+            'silver': medal_results.silver,
+            'bronze': medal_results.bronze
+        }
+
     else:
-        medal_results = {
+        medal_results_dict = {
             'gold': 'TBD',
             'silver': 'TBD',
             'bronze': 'TBD'
@@ -141,11 +149,7 @@ def box_scores(year):
 
     return jsonify({
         'scores': scoresDict,
-        'medal_results': {
-            'gold': medal_results.gold,
-            'silver': medal_results.silver,
-            'bronze': medal_results.bronze
-        }
+        'medal_results': medal_results_dict
     })
 
     
