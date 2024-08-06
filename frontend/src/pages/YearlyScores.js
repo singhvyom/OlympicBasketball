@@ -1,19 +1,46 @@
 import React, {useState, useEffect, useCallback} from 'react';
+import './YearlyScores.css';
+import ScoreCard from '../components/ScoreCard';
 import { useParams } from 'react-router-dom';
+import axios from 'axios';
+
 
 const YearlyScores = () => {
     const {year} = useParams();
-    const [scores, setScores] = useState('');
+    const [scores, setScores] = useState([]);
+    const [flags, setFlags] = useState([]);
+    const [medalists, setMedalists] = useState([]);
 
     const fetchScores = useCallback(async () => {
         try {
             const response = await fetch(`http://127.0.0.1:5000/box_scores/${year}`);
-            const text = await response.text();
-            setScores(text);
+            const data = await response.json();
+            setScores(data.scores);
+            fetchFlags(data.scores);
+            setMedalists(data.medal_results);
+
         } catch (error) {
             console.error('Error fetching data: ', error);
         }
     }, [year]); // Dependency array includes `year`
+
+    const fetchFlags = async(scores) => {
+        const newFlags = [];
+        for (const game of scores){
+
+            try {
+                const homeFlagResponse = await axios.get(`https://restcountries.com/v3.1/name/${game['Home Team']}`);
+                const awayFlagResponse = await axios.get(`https://restcountries.com/v3.1/name/${game['Away Team']}`);
+                newFlags[game['Home Team']] = homeFlagResponse.data[0]?.flags?.svg || '';
+                newFlags[game['Away Team']] = awayFlagResponse.data[0]?.flags?.svg || '';
+            }catch (error){
+                console.error('Error fetching flags: ', error);
+            }
+
+        }
+        setFlags(newFlags);
+    }
+
 
     useEffect(() => {
         fetchScores();
@@ -21,8 +48,34 @@ const YearlyScores = () => {
 
     return (
         <div>
-            <h2>Scores for {year}</h2>
-            <pre>{scores}</pre>
+            <h2 className = 'score-title'>Scores for {year}</h2>
+            <div className='medalists'>
+                <div className='medalist'>
+                    <h4>Gold: {medalists['gold'] || 'N/A'}</h4>
+                </div>
+                <div className='medalist'>
+                    <h4>Silver: {medalists['silver'] || 'N/A'}</h4>
+                </div>
+                <div className='medalist'>
+                    <h4>Bronze: {medalists['bronze'] || 'N/A'}</h4>
+                </div>
+            </div>
+            <ul className = 'score_cards__items'>
+                {scores.map((game, index) => (
+                    <ScoreCard
+                        key = {index}
+                        homeTeam = {game['Home Team']}
+                        homeScore = {game['Home Score']}
+                        awayTeam = {game['Away Team']}
+                        awayScore = {game['Away Score']}
+                        date = {game['Date']}
+                        homeFlag = {flags[game['Home Team']]}
+                        awayFlag = {flags[game['Away Team']]}
+                        // path = {`/boxscores/${year}/${game['Home Team']} vs ${game['Away Team']}`}
+                        path={`/boxscores/${year}/${encodeURIComponent(game['Home Team'])} vs ${encodeURIComponent(game['Away Team'])}/${encodeURIComponent(game['Date'])}`}
+                    />
+                ))}
+            </ul>
         </div>
     );
 

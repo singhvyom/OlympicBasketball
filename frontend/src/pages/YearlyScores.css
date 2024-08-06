@@ -1,0 +1,5 @@
+.score_cards__items{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}

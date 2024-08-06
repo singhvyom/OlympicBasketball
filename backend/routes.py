@@ -1,5 +1,7 @@
 from flask import request, jsonify
 from config import app, db
+import os
+import json
 from models import Olympics, Teams, Players, PlayerTeam, Games, BoxScores, TeamStats, Medals
 from sqlalchemy import func, case
 
@@ -101,7 +103,51 @@ def home():
 
 @app.route('/box_scores/<int:year>', methods=['GET'])
 def box_scores(year):
-    return 'This is the box scores route for the year ' + str(year)
+    #use json to construct scores, no need to query
+    file_path = f'box_scores/box_scores_{year}.json'
+
+    if not os.path.exists(file_path):
+        return jsonify({'message': 'Year not found'}), 404
+    
+    with open(file_path, 'r') as f:
+        data = json.load(f)
+
+    scoresDict = []
+    for game in data:
+        scoresDict.append({
+            'Date': game.get('Date'),
+            'Home Team': game.get('Home Team'),
+            'Home Score': game.get('Home Score'),
+            'Away Team': game.get('Away Team'),
+            'Away Score': game.get('Away Score')
+        })
+    
+    if(year != 2024):
+        medal_results = db.session.query(
+            Medals.gold,
+            Medals.silver,
+            Medals.bronze
+        ).filter(
+            Medals.year == year
+        ).first()
+    else:
+        medal_results = {
+            'gold': 'TBD',
+            'silver': 'TBD',
+            'bronze': 'TBD'
+        }
+    
+
+    return jsonify({
+        'scores': scoresDict,
+        'medal_results': {
+            'gold': medal_results.gold,
+            'silver': medal_results.silver,
+            'bronze': medal_results.bronze
+        }
+    })
+
+    
 
 @app.route('/stat_leaders', methods=['GET'])
 def stat_leaders():

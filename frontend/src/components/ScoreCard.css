@@ -1,0 +1,46 @@
+
+.score-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    margin: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.score-card:hover {
+    background-color: #f0f0f0;
+}
+
+.team-info {
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.team-flag {
+    width: 100px;
+    height: 75px;
+    margin-right: 10px;
+}
+
+.team-details {
+    flex: 1;
+    text-align: center;
+}
+.team-details h3 {
+    font-size: 24px;
+}
+
+.score {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.date {
+    font-size: 14px;
+    color: #555;
+}
