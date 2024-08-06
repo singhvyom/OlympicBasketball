@@ -81,6 +81,14 @@ const HomePage = () => {
                     <FolderList top_teams={top_teams} />
                 </div>
 
+                <div className="points-table">
+                    <h1>Points Table</h1>
+                    <div className = 'toggle-container'>
+                        <ColorToggleButton alignment={groupAlignment} handleChange={handleGroupChange} buttons = {groupLetters} />
+                    </div>
+                    <PointsTable data={data} />
+                </div>
+                
                 <div className='player-list'>
                     <h1>All Time Leaders</h1>
                     <ColorToggleButton alignment={alignment} handleChange={handleChange} buttons = {buttons} />
@@ -103,13 +111,7 @@ const HomePage = () => {
                     </ul>
                 </div>
 
-                <div className="points-table">
-                    <h1>Points Table</h1>
-                    <div className = 'toggle-container'>
-                        <ColorToggleButton alignment={groupAlignment} handleChange={handleGroupChange} buttons = {groupLetters} />
-                    </div>
-                    <PointsTable data={data} />
-                </div>
+                
                 
             </div>
         </div>

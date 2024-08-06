@@ -121,7 +121,8 @@ def box_scores(year):
             'Away Team': game.get('Away Team'),
             'Away Score': game.get('Away Score')
         })
-    
+        
+    #change when results for 2024 are available
     if(year != 2024):
         medal_results = db.session.query(
             Medals.gold,

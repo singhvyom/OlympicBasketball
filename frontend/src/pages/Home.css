@@ -7,11 +7,7 @@
 }
 
 .team-list {
-  display: column;
-  flex-wrap: wrap;
-  justify-content: start;
   margin-left: 20px;
-  ;
 }
 
 .team-list h1 {
@@ -24,7 +20,7 @@
 
 .player-list {
   margin-left:0rem;
-    
+  margin-right: 10rem; 
 }
 
 .player-list h1 {
@@ -35,7 +31,7 @@
 
 .points-table {
     margin-left: 0rem;
-    margin-right: 5rem;
+    margin-right: 0rem;
     margin-bottom: 10rem;
 }
 

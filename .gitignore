@@ -1,6 +1,9 @@
 box_score_urls/
 
+backend/utils/
 urls.py
+processed_urls.json
+
 
 config.json
 

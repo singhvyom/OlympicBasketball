@@ -188,7 +188,7 @@ def safe_int(value):
 
 def load_totals_data(cur, stats, game_id, team_id):
 
-    #will be called by load_box_data when iterating throught the team's box scores
+    #will be called by load_box_execution when iterating throught the team's box scores
     #need the team name, the game id, and the box score data
     #player here is just 'Totals'
     #stats is the box score data for the team
@@ -232,7 +232,7 @@ def load_totals_data(cur, stats, game_id, team_id):
 
 def load_player_stats(cur, player, stats, game_id, team_id, year):
     
-    #will be called by load_box_data when iterating through the team's box scores
+    #will be called by load_box_execution when iterating through the team's box scores
     #need the player name, the game id, the team id, and the box score data
     cur.execute(''' INSERT INTO Players(player_name)
                     VALUES (%s)
