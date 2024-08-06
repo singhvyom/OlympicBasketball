@@ -101,7 +101,7 @@ def home():
     return jsonify(response)
 
 
-@app.route('/box_scores/<int:year>', methods=['GET'])
+@app.route('/scores/<int:year>', methods=['GET'])
 def box_scores(year):
     #use json to construct scores, no need to query
     file_path = f'box_scores/box_scores_{year}.json'

@@ -7,7 +7,7 @@ from bs4 import BeautifulSoup
 from urllib.parse import urljoin
 import psycopg2
 
-
+from datetime import datetime
 from urls import url2024
 
 from backend.etl.boxScoreUrls import get_box_score_urls
@@ -19,7 +19,11 @@ from backend.etl.load import load_box_execution, load_player_stats, safe_int, co
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 with open('config.json', 'r') as config_file:
     config = json.load(config_file)
-    
+
+def filter_games_by_date(games, date):
+    date_obj = datetime.strptime(date, "%b. %d, %Y")
+    return [game for game in games if datetime.strptime(game.get('Date', ""), "%b. %d, %Y") == date_obj]
+
 def load_processed_urls():
     if os.path.exists('processed_urls.json'):
         with open('processed_urls.json', 'r') as f:
@@ -68,12 +72,13 @@ with open(output_file, 'w') as out_file:
 
 save_processed_urls(processed_urls)
 
-def load_data(cur):
+def load_data(cur, date_str):
     games = []
     with open('box_scores/box_scores_2024.json', 'r') as f:
         games = json.load(f)
     
-    load_box_execution(cur, games)
+    filtered_games = filter_games_by_date(games, date_str)
+    load_box_execution(cur, filtered_games)
 
 def insert_olympics_data(cur, year, location):
     # Check if the year already exists
@@ -98,7 +103,7 @@ def insert_olympics_data(cur, year, location):
         print(f"Data for year {year} already exists.")
     
 
-def main():
+def main(date_str):
 
     try:
         #Connect to the database
@@ -113,10 +118,10 @@ def main():
 
             with conn.cursor() as cur:
                 logging.info("Connected to the database")
-                insert_olympics_data(cur, 2024, 'Paris')
+                # insert_olympics_data(cur, 2024, 'Paris')
                 
                 logging.info("Loading box score data...")
-                load_data(cur)
+                load_data(cur, date_str)
 
                 #conn.commit()
                 logging.info("Data loaded successfully")
@@ -128,4 +133,6 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    #HASNT BEEN RAN YET 4:43 PM
+    date_str = "Aug 6. 2024"
+    main(date_str)

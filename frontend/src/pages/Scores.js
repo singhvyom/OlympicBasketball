@@ -1,8 +1,8 @@
 import React from 'react';
-import './BoxScores.css';
+import './Scores.css';
 import Cards from '../components/Cards';
 
-const BoxScores = () => {
+const Scores = () => {
     return (
         <div>
             <Cards />
@@ -11,4 +11,4 @@ const BoxScores = () => {
     )
 }
 
-export default BoxScores;
+export default Scores;

@@ -8,7 +8,7 @@ export default function NavBar() {
         OLYMPIC BASKETBALL DB
         </Link>
         <ul>
-            <CustomLink to="/boxscores">Box Scores</CustomLink>
+            <CustomLink to="/scores">Scores</CustomLink>
             <CustomLink to="/statleaders">Stat Leaders</CustomLink>
             <CustomLink to="/query">Query</CustomLink>
         </ul>
