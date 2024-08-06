@@ -95,13 +95,13 @@ def home():
         'top_rebounders': top_rebounders_dict,
         'top_passers': top_passers_dict
     }
-    
+
     return jsonify(response)
 
 
-@app.route('/box_scores', methods=['GET'])
-def box_scores():
-    return 'This is the box scores route'
+@app.route('/box_scores/<int:year>', methods=['GET'])
+def box_scores(year):
+    return 'This is the box scores route for the year ' + str(year)
 
 @app.route('/stat_leaders', methods=['GET'])
 def stat_leaders():

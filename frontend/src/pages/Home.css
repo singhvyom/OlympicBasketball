@@ -45,6 +45,12 @@
     text-decoration: underline;
 }
 
+.points-table .toggle-container{
+  display: flex;
+  justify-content: center; 
+  margin-top: 20px;
+}
+
 ul {
     list-style-type: none;
     padding: 0;

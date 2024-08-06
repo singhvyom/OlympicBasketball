@@ -105,7 +105,9 @@ const HomePage = () => {
 
                 <div className="points-table">
                     <h1>Points Table</h1>
-                    <ColorToggleButton alignment={groupAlignment} handleChange={handleGroupChange} buttons = {groupLetters} />
+                    <div className = 'toggle-container'>
+                        <ColorToggleButton alignment={groupAlignment} handleChange={handleGroupChange} buttons = {groupLetters} />
+                    </div>
                     <PointsTable data={data} />
                 </div>
                 
