@@ -6,6 +6,7 @@ import './Footer.css';
 function Footer() {
     return (
         <div className='footer'>
+            {/* <h3>Created by Vyom Singh</h3> */}
             <div className='socials'>
                 <a href='https://www.linkedin.com/in/vyom-singh/' target='_blank'rel='noopener noreferrer'>
                     <LinkedInIcon /> 
