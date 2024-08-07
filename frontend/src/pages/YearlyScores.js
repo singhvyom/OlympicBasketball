@@ -13,7 +13,7 @@ const YearlyScores = () => {
 
     const fetchScores = useCallback(async () => {
         try {
-            const response = await fetch(`http://127.0.0.1:5000/box_scores/${year}`);
+            const response = await fetch(`http://127.0.0.1:5000/scores/${year}`);
             const data = await response.json();
             setScores(data.scores);
             fetchFlags(data.scores);
@@ -71,8 +71,8 @@ const YearlyScores = () => {
                         date = {game['Date']}
                         homeFlag = {flags[game['Home Team']]}
                         awayFlag = {flags[game['Away Team']]}
-                        // path = {`/boxscores/${year}/${game['Home Team']} vs ${game['Away Team']}`}
-                        path={`/boxscores/${year}/${encodeURIComponent(game['Home Team'])} vs ${encodeURIComponent(game['Away Team'])}/${encodeURIComponent(game['Date'])}`}
+                        // path = {`/scores/${year}/${game['Home Team']} vs ${game['Away Team']}`}
+                        path={`/scores/${year}/${encodeURIComponent(game['Home Team'])}_vs_${encodeURIComponent(game['Away Team'])}_${encodeURIComponent(game['Date'])}`}
                     />
                 ))}
             </ul>

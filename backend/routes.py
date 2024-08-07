@@ -1,5 +1,6 @@
 from flask import request, jsonify
 from config import app, db
+import urllib.parse
 import os
 import json
 from models import Olympics, Teams, Players, PlayerTeam, Games, BoxScores, TeamStats, Medals
@@ -102,7 +103,7 @@ def home():
 
 
 @app.route('/scores/<int:year>', methods=['GET'])
-def box_scores(year):
+def scores(year):
     #use json to construct scores, no need to query
     file_path = f'box_scores/box_scores_{year}.json'
 
@@ -153,6 +154,38 @@ def box_scores(year):
     })
 
     
+@app.route('/scores/<int:year>/<hometeam_vs_awayteam_date>', methods=['GET'])
+def boxscore(year, hometeam_vs_awayteam_date):
+
+    # hometeam_vs_awayteam_date = hometeam_vs_awayteam_date.replace('%20', ' ')
+    # home_team, away_team, date = hometeam_vs_awayteam_date.split('_vs_')
+    hometeam_vs_awayteam_date = urllib.parse.unquote(hometeam_vs_awayteam_date)
+    try:
+        # Split based on the '_vs_' and '_'
+        home_team_part, date = hometeam_vs_awayteam_date.rsplit('_', 1)
+        home_team, away_team = home_team_part.split('_vs_')
+
+        # Remove extra spaces
+        home_team = home_team.strip()
+        away_team = away_team.strip()
+        date = date.strip()
+
+    except (ValueError, IndexError) as e:
+        return jsonify({'message': 'Invalid URL format', 'error': str(e)}), 400
+    
+
+    file_path = f'box_scores/box_scores_{year}.json'
+
+    with open(file_path, 'r') as f:
+        data = json.load(f)
+
+    for game in data:
+        if(game['Home Team'] == home_team and
+            game['Away Team'] == away_team and
+            game['Date'] == date):
+            return jsonify(game)
+    
+    return jsonify({'message': 'Box Score not found'}), 404
 
 @app.route('/stat_leaders', methods=['GET'])
 def stat_leaders():
