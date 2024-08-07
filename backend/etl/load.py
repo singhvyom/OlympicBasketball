@@ -4,13 +4,15 @@ import csv
 import logging
 import os
 from datetime import datetime
+from dotenv import load_dotenv
 
 # Set up logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 #get the config file
-with open('config.json', 'r') as config_file:
-    config = json.load(config_file)
+# with open('config.json', 'r') as config_file:
+#     config = json.load(config_file)
+load_dotenv()
 
 #create all the necessary tables first
 
@@ -382,11 +384,11 @@ if __name__ == "__main__":
     try:
         #Connect to the database
         with psycopg2.connect(
-                host=config['hostname'], 
-                dbname=config['database'], 
-                user=config['username'], 
-                password=config['pwd'], 
-                port=config['port_id']
+                host=os.getenv('hostname'), 
+                dbname=os.getenv('database'), 
+                user=os.getenv('username'), 
+                password=os.getenv('pwd'), 
+                port=os.getenv('port_id')
             ) as conn:
 
 
