@@ -10,7 +10,7 @@ const BoxScore = () => {
         const fetchBoxScores = async () => {
             try {
                 // const formattedDate = homeTeam_vs_awayTeam_date.replace(/_/g, ' ').replace(/%20/g, ' ');
-                const response = await fetch(`http://127.0.0.1:5000/scores/${year}/${homeTeam_vs_awayTeam_date}`);
+                const response = await fetch(`https://olympicbasketball-db-63563456363c.herokuapp.com/scores/${year}/${homeTeam_vs_awayTeam_date}`);
                 const data = await response.json();
                 setBoxScore(data);
             }catch (error){
