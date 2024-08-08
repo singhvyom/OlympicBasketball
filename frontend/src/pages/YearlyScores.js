@@ -13,7 +13,7 @@ const YearlyScores = () => {
 
     const fetchScores = useCallback(async () => {
         try {
-            const response = await fetch(`http://127.0.0.1:5000/scores/${year}`);
+            const response = await fetch(`https://olympicbasketball-db-63563456363c.herokuapp.com/scores/${year}`);
             const data = await response.json();
             setScores(data.scores);
             fetchFlags(data.scores);
