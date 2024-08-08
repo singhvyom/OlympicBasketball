@@ -9,11 +9,11 @@ from sqlalchemy import func, case
 @app.route('/')
 def serve_react_app():
     # return "backend working"
-    return send_from_directory('..frontend/build', 'index.html')
+    return send_from_directory('../frontend/build', 'index.html')
 
 @app.route('/<path:path>')
 def serve_static_files(path):
-    return send_from_directory('..frontend/build', path)
+    return send_from_directory('../frontend/build', path)
 
 @app.route('/home', methods=['GET'])
 def home():
