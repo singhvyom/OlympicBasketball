@@ -13,7 +13,7 @@ load_dotenv()
 app = Flask(__name__)
 CORS(app)
 
-db_url = f"postgresql://{os.getenv('username')}:{os.getenv('pwd')}@{os.getenv('hostname')}:{os.getenv('port_id')}/{os.getenv('database')}"
+# db_url = f"postgresql://{os.getenv('username')}:{os.getenv('pwd')}@{os.getenv('hostname')}:{os.getenv('port_id')}/{os.getenv('database')}"
 app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
