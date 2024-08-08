@@ -1,4 +1,4 @@
-from flask import request, jsonify
+from flask import request, jsonify, send_from_directory
 from config import app, db
 import urllib.parse
 import os
@@ -7,6 +7,14 @@ from models import Olympics, Teams, Players, PlayerTeam, Games, BoxScores, TeamS
 from sqlalchemy import func, case
 
 @app.route('/')
+def serve_react_app():
+    return send_from_directory('frontend/build', 'index.html')
+
+@app.route('/<path:path>')
+def serve_static_files(path):
+    return send_from_directory('frontend/build', path)
+
+@app.route('/home', methods=['GET'])
 def home():
     #we will display the top 3 teams with the most medals
     #with designations for gold, silver, and bronze
