@@ -6,16 +6,16 @@ import json
 from models import Olympics, Teams, Players, PlayerTeam, Games, BoxScores, TeamStats, Medals
 from sqlalchemy import func, case
 
-@app.route('/')
-def serve_react_app():
-    # return "backend working"
-    return send_from_directory('../frontend/build', 'index.html')
+# @app.route('/')
+# def serve_react_app():
+#     # return "backend working"
+#     return send_from_directory('../frontend/build', 'index.html')
 
-@app.route('/<path:path>')
-def serve_static_files(path):
-    return send_from_directory('../frontend/build', path)
+# @app.route('/<path:path>')
+# def serve_static_files(path):
+#     return send_from_directory('../frontend/build', path)
 
-@app.route('/home', methods=['GET'])
+@app.route('/', methods=['GET'])
 def home():
     #we will display the top 3 teams with the most medals
     #with designations for gold, silver, and bronze
@@ -114,7 +114,7 @@ def home():
 @app.route('/scores/<int:year>', methods=['GET'])
 def scores(year):
     #use json to construct scores, no need to query
-    file_path = f'box_scores/box_scores_{year}.json'
+    file_path = f'../box_scores/box_scores_{year}.json'
 
     if not os.path.exists(file_path):
         return jsonify({'message': 'Year not found'}), 404
