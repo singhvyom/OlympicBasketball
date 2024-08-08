@@ -114,7 +114,7 @@ def home():
 @app.route('/scores/<int:year>', methods=['GET'])
 def scores(year):
     #use json to construct scores, no need to query
-    file_path = f'/box_scores/box_scores_{year}.json'
+    file_path = f'box_scores/box_scores_{year}.json'
 
     if not os.path.exists(file_path):
         return jsonify({'message': 'Year not found'}), 404

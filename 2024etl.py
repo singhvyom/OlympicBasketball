@@ -1,4 +1,5 @@
 import os
+from dotenv import load_dotenv
 import sys
 import json
 import logging
@@ -17,8 +18,9 @@ from backend.etl.load import load_box_execution, load_player_stats, safe_int, co
 
 # Set up logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
-with open('config.json', 'r') as config_file:
-    config = json.load(config_file)
+# with open('config.json', 'r') as config_file:
+#     config = json.load(config_file)
+load_dotenv()
 
 def filter_games_by_date(games, date):
     date_obj = datetime.strptime(date, "%b. %d, %Y")
@@ -62,7 +64,7 @@ for url in new_urls:
 
 
     
-output_dir = 'box_scores'
+output_dir = 'backend/box_scores'
 if not os.path.exists(output_dir):
     os.makedirs(output_dir)
     
@@ -74,7 +76,7 @@ save_processed_urls(processed_urls)
 
 def load_data(cur, date_str):
     games = []
-    with open('box_scores/box_scores_2024.json', 'r') as f:
+    with open('backend/box_scores/box_scores_2024.json', 'r') as f:
         games = json.load(f)
     
     filtered_games = filter_games_by_date(games, date_str)
@@ -108,11 +110,11 @@ def main(date_str):
     try:
         #Connect to the database
         with psycopg2.connect(
-                host=config['hostname'], 
-                dbname=config['database'], 
-                user=config['username'], 
-                password=config['pwd'], 
-                port=config['port_id']
+                host=os.getenv('hostname'), 
+                dbname=os.getenv('database'), 
+                user=os.getenv('username'), 
+                password=os.getenv('pwd'), 
+                port=os.getenv('port_id')
             ) as conn:
 
 
@@ -133,6 +135,6 @@ def main(date_str):
 
 
 if __name__ == '__main__':
-    #HASNT BEEN RAN YET 4:43 PM
-    date_str = "Aug 6. 2024"
+    #RAN AUG 7: 8:59 PM
+    date_str = "Aug. 6, 2024"
     main(date_str)
