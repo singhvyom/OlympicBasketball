@@ -31,8 +31,9 @@ const HomePage = () => {
     }, []);
 
     const fetchTeamsPlayers = async () => {
+        const baseURL = process.env.REACT_APP_BACKEND_URL;
         try {
-            const response = await fetch('https://olympicbasketball-db-63563456363c.herokuapp.com/');
+            const response = await fetch(`${baseURL}`);
             const data = await response.json();
             set_teams(data.top_teams);
             set_players(data.top_players);
