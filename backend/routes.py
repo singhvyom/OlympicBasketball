@@ -166,8 +166,7 @@ def scores(year):
 @app.route('/scores/<int:year>/<hometeam_vs_awayteam_date>', methods=['GET'])
 def boxscore(year, hometeam_vs_awayteam_date):
 
-    # hometeam_vs_awayteam_date = hometeam_vs_awayteam_date.replace('%20', ' ')
-    # home_team, away_team, date = hometeam_vs_awayteam_date.split('_vs_')
+    
     hometeam_vs_awayteam_date = urllib.parse.unquote(hometeam_vs_awayteam_date)
     try:
         # Split based on the '_vs_' and '_'
