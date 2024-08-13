@@ -8,9 +8,9 @@ const BoxScore = () => {
 
     useEffect(() => {
         const fetchBoxScores = async () => {
+            const baseURL = process.env.REACT_APP_BACKEND_URL
             try {
-                // const formattedDate = homeTeam_vs_awayTeam_date.replace(/_/g, ' ').replace(/%20/g, ' ');
-                const response = await fetch(`https://olympicbasketball-db-63563456363c.herokuapp.com/scores/${year}/${homeTeam_vs_awayTeam_date}`);
+                const response = await fetch(`${baseURL}/scores/${year}/${homeTeam_vs_awayTeam_date}`);
                 const data = await response.json();
                 setBoxScore(data);
             }catch (error){

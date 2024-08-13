@@ -31,8 +31,9 @@ const HomePage = () => {
     }, []);
 
     const fetchTeamsPlayers = async () => {
+        const baseURL = process.env.REACT_APP_BACKEND_URL;
         try {
-            const response = await fetch('https://olympicbasketball-db-63563456363c.herokuapp.com/');
+            const response = await fetch(`${baseURL}`);
             const data = await response.json();
             set_teams(data.top_teams);
             set_players(data.top_players);
@@ -95,17 +96,17 @@ const HomePage = () => {
                     <ul>
                         {alignment === 'points' && top_players.map((player, index) => (
                             <li key={index}>
-                                {player.player}: {player.total_points} Points
+                                <span className='player-name'>{player.player}</span>: <span className='player-stats'>{player.total_points}  Points</span>
                             </li>
                         ))}
                         {alignment === 'rebounds' && top_rebounders.map((player, index) => (
                             <li key={index}>
-                                {player.player}: {player.total_rebounds} Rebounds
+                                <span className='player-name'>{player.player}</span>: <span className='player-stats'>{player.total_rebounds} Rebounds</span>
                             </li>
                         ))}
                         {alignment === 'assists' && top_passers.map((player, index) => (
                             <li key={index}>
-                                {player.player}: {player.assists} Assists
+                                <span className='player-name'>{player.player}</span>: <span className='player-stats'>{player.assists} Assists</span>
                             </li>
                         ))}
                     </ul>

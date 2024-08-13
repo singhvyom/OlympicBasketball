@@ -1,44 +1,41 @@
 .lists-container {
   display: flex;
   margin-top: 20px;
+  flex-wrap: wrap;
   padding: 0;
   margin-bottom: 0rem;
   justify-content: space-between;
+  object-fit: contain;
 }
 
-.team-list {
-  margin-left: 20px;
+.team-list, 
+.player-list{
+  margin: 0rem;
+  padding: 0;
+}
+
+.team-list{
+  margin-left: 1rem;
 }
 
 .team-list h1 {
   margin-left: 0px;
   font-style: bold;
   text-decoration: underline;
-
-}
-
-
-.player-list {
-  margin-left:0rem;
-  margin-right: 10rem; 
-}
-
-.player-list h1 {
-    margin-left: 0px;
-    font-style: bold;
-    text-decoration: underline;
+  font-size: 2rem;
 }
 
 .points-table {
-    margin-left: 0rem;
-    margin-right: 0rem;
-    margin-bottom: 10rem;
+  margin-left: 0rem;
+  margin-right: 0rem;
+  margin-bottom: 10rem;
 }
 
 .points-table h1 {
-    margin-left: 0px;
-    font-style: bold;
-    text-decoration: underline;
+  margin-left: 0px;
+  font-style: bold;
+  text-decoration: underline;
+  font-size: 2rem;
 }
 
 .points-table .toggle-container{
@@ -47,13 +44,58 @@
   margin-top: 20px;
 }
 
-ul {
-    list-style-type: none;
-    padding: 0;
+
+.player-list {
+  margin-left:1rem;
+  margin-right: 10rem;
+  padding: 0 1.25rem;
+
+}
+
+.player-list h1 {
+    margin-left: 0px;
+    font-style: bold;
+    text-decoration: underline;
+    font-size: 2rem;
+}
+
+
+
+.player-list ul {
+  list-style-type: disc;
+  padding-left: 1.25rem;
+    /* box-shadow: 0 0 10px rgba(166, 165, 165, 0.981); */
 }
   
-li{
-    padding: 8px 0;
+.player-list li{
+  padding: 8px 0;
+  font-size: 1.05rem;
+  color: #333;
+}
+
+.player-name {
+  font-weight: bold;
+}
+
+.player-stats {
+  font-style: italic;
+  color: #555;
+}
+
+@media (max-width: 768px) {
+  .lists-container {
+    flex-direction: column;
+    align-items: center;
+  }
+  .team-list {
+    margin-left: 0;
+  }
+  .player-list {
+    margin-left: 0;
+  }
+  .points-table {
+    margin-bottom: 5rem;
+  }
 }
 
 /* .th {

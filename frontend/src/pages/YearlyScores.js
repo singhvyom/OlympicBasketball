@@ -12,8 +12,9 @@ const YearlyScores = () => {
     const [medalists, setMedalists] = useState([]);
 
     const fetchScores = useCallback(async () => {
+        const baseURL = process.env.REACT_APP_BACKEND_URL
         try {
-            const response = await fetch(`https://olympicbasketball-db-63563456363c.herokuapp.com/scores/${year}`);
+            const response = await fetch(`${baseURL}/scores/${year}`);
             const data = await response.json();
             setScores(data.scores);
             fetchFlags(data.scores);

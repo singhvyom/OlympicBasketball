@@ -85,4 +85,14 @@ html, body{
   background-color: #777;
 }
 
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    gap: 1rem;
+  }
 
+  .navbar a {
+    gap: 1rem;
+  }
+  
+}
