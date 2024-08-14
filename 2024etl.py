@@ -22,9 +22,19 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(
 #     config = json.load(config_file)
 load_dotenv()
 
-def filter_games_by_date(games, date):
-    date_obj = datetime.strptime(date, "%b. %d, %Y")
-    return [game for game in games if datetime.strptime(game.get('Date', ""), "%b. %d, %Y") == date_obj]
+def filter_games_by_date(games, date, date2):
+    target_date = datetime.strptime(date, "%b. %d, %Y")
+    target_date2 = datetime.strptime(date2, "%b. %d, %Y")
+    target_dates = [target_date, target_date2]
+
+    filtered_games = []
+    for game in games:
+        game_date = datetime.strptime(game.get('Date', ""), "%b. %d, %Y")
+        if game_date in target_dates:
+            filtered_games.append(game)
+
+    return filtered_games
+
 
 def load_processed_urls():
     if os.path.exists('processed_urls.json'):
@@ -35,7 +45,7 @@ def load_processed_urls():
 
 def save_processed_urls(urls):
     with open('processed_urls.json', 'w') as f:
-        json.dump(list(urls), f)
+        json.dump(list(urls), f, indent=4)
 
 def get_new_urls(all_urls, processed_urls):
     return [url for url in all_urls if url not in processed_urls]
@@ -50,7 +60,17 @@ new_urls = get_new_urls(urls, processed_urls)
 
 
 with open('box_score_urls/box_score_urls_2024.json', 'w') as f:
-    json.dump(new_urls, f)
+    json.dump(urls, f)
+
+
+def load_existing_data(file_path):
+    if os.path.exists(file_path):
+        with open(file_path, 'r') as f:
+            return json.load(f)
+    
+    return []
+
+existing_data = load_existing_data('backend/box_scores/box_scores_2024.json')
 
 year_box_scores = []
 for url in new_urls:
@@ -63,49 +83,61 @@ for url in new_urls:
 
 
 
-    
 output_dir = 'backend/box_scores'
-if not os.path.exists(output_dir):
-    os.makedirs(output_dir)
-    
+# if not os.path.exists(output_dir):
+#     os.makedirs(output_dir)
+all_box_scores = existing_data + year_box_scores
+
 output_file = os.path.join(output_dir, 'box_scores_2024.json')
 with open(output_file, 'w') as out_file:
-    json.dump(year_box_scores, out_file, indent=4)
+    json.dump(all_box_scores, out_file, indent=4)
 
 save_processed_urls(processed_urls)
 
-def load_data(cur, date_str):
+def load_data(cur, date, date2):
     games = []
     with open('backend/box_scores/box_scores_2024.json', 'r') as f:
         games = json.load(f)
     
-    filtered_games = filter_games_by_date(games, date_str)
+    filtered_games = filter_games_by_date(games, date, date2)
     load_box_execution(cur, filtered_games)
 
-def insert_olympics_data(cur, year, location):
-    # Check if the year already exists
+# def insert_olympics_data(cur, year, location):
+#     # Check if the year already exists
+#     cur.execute("""
+#         SELECT EXISTS (
+#             SELECT 1 
+#             FROM Olympics 
+#             WHERE year = %s
+#         );
+#     """, (year,))
+    
+#     exists = cur.fetchone()[0]
+    
+#     if not exists:
+#         # Insert data if it doesn't exist
+#         cur.execute("""
+#             INSERT INTO Olympics (year, location) 
+#             VALUES (%s, %s);
+#         """, (year, location))
+#         print(f"Inserted data for year {year} with location {location}.")
+#     else:
+#         print(f"Data for year {year} already exists.")
+
+def insert_2024_results(cur):
+    year = 2024
+    gold = 'USA'
+    silver = 'France'
+    bronze = 'Serbia'
+    fourth = 'Germany'
+
     cur.execute("""
-        SELECT EXISTS (
-            SELECT 1 
-            FROM Olympics 
-            WHERE year = %s
-        );
-    """, (year,))
-    
-    exists = cur.fetchone()[0]
-    
-    if not exists:
-        # Insert data if it doesn't exist
-        cur.execute("""
-            INSERT INTO Olympics (year, location) 
-            VALUES (%s, %s);
-        """, (year, location))
-        print(f"Inserted data for year {year} with location {location}.")
-    else:
-        print(f"Data for year {year} already exists.")
+        INSERT INTO MEDALS (year, gold, silver, bronze, fourth)
+        VALUES (%s, %s, %s, %s, %s);
+        """, (year, gold, silver, bronze, fourth))
     
 
-def main(date_str):
+def main(date, date2):
 
     try:
         #Connect to the database
@@ -120,10 +152,10 @@ def main(date_str):
 
             with conn.cursor() as cur:
                 logging.info("Connected to the database")
-                # insert_olympics_data(cur, 2024, 'Paris')
+                insert_2024_results(cur)
                 
                 logging.info("Loading box score data...")
-                load_data(cur, date_str)
+                load_data(cur, date, date2)
 
                 #conn.commit()
                 logging.info("Data loaded successfully")
@@ -135,6 +167,7 @@ def main(date_str):
 
 
 if __name__ == '__main__':
-    #RAN AUG 7: 8:59 PM
-    date_str = "Aug. 6, 2024"
-    main(date_str)
+    #NOT RAN YET, AUG 13 5:46 PM
+    date_str = "Aug. 8, 2024"
+    date_str_2 = "Aug. 10, 2024"
+    main(date_str, date_str_2)
