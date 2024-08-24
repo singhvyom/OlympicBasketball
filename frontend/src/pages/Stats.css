@@ -1,0 +1,42 @@
+.options-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.stat_button {
+    background-color: #f5f5f5;
+    border: 1px solid #f5f5f5;
+    color: #000;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.stat_button:hover {
+    background-color: #8a8989;
+    color: #f5f5f5;
+}
+
+.stat_button.active {
+    background-color: #000;
+    color: #f5f5f5;
+}
+
+.totals-or-avg-buttons{
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.data-container{
+    display: flex;
+    justify-content: center;
+    margin-top: 1.25rem;
+    margin-bottom: 3rem;
+}
