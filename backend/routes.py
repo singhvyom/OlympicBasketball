@@ -223,6 +223,7 @@ def stat_leaders():
         db.func.sum(BoxScores.free_throws_made).label('free_throws_made'),
         db.func.sum(BoxScores.free_throws_attempted).label('free_throws_attempted'),
         db.func.sum(BoxScores.minutes).label('minutes'),
+        db.func.sum(BoxScores.gamescore).label('gamescore'),
         db.func.count(db.distinct(BoxScores.game_id)).label('games_played')
     ).join(
         BoxScores, Players.player_id == BoxScores.player_id
@@ -278,8 +279,7 @@ def stat_leaders():
         Teams.country_name,
         Games.year
     ).order_by(
-        Players.player_name,
-        Games.year
+        db.desc('points'),
     ).all()
 
     TeamsHome = aliased(Teams)
@@ -342,7 +342,7 @@ def stat_leaders():
     career_stats_dict = [{
         'player': player.player_name,
         'country': player.country_name,
-        'minutes': player.minutes,
+        'minutes': round(player.minutes, 2),
         'points': player.points,
         'rebounds': player.rebounds,
         'assists': player.assists,
@@ -375,7 +375,8 @@ def stat_leaders():
         'avg_free_throws_made': round(player.free_throws_made/player.games_played, 2) if player.games_played > 0 else 0,
         'avg_free_throws_attempted': round(player.free_throws_attempted/player.games_played, 2) if player.games_played > 0 else 0,
         'career_effective_field_goal_percentage': round(((player.field_goals_made + 0.5 * player.three_point_field_goals_made)/player.field_goals_attempted) * 100, 2) if player.field_goals_attempted > 0 else 0,
-        'career_true_shooting_percentage': round((player.points/(2 * (player.field_goals_attempted + 0.44 * player.free_throws_attempted))) * 100, 2) if player.field_goals_attempted > 0 else 0
+        'career_true_shooting_percentage': round((player.points/(2 * (player.field_goals_attempted + 0.44 * player.free_throws_attempted))) * 100, 2) if player.field_goals_attempted > 0 else 0,
+        'career_avg_gamescore': round(player.gamescore/player.games_played, 2) if player.games_played > 0 else 0
     } for player in career_totals]
 
     yearly_stats_dict = [{
@@ -423,7 +424,7 @@ def stat_leaders():
     game_stats_dict = [{
         'player': player.player_name,
         'country': player.country_name,
-        'olympic_year': player.year,
+        'year': player.year,
         'date': player.date,
         'opponent': player.opponent,
         'minutes': player.minutes,

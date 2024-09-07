@@ -28,10 +28,17 @@
     color: #f5f5f5;
 }
 
-.totals-or-avg-buttons{
+.basic-shooting-adv-buttons{
     display: flex;
     justify-content: center;
-    margin-top: 20px;
+    margin-top: 1.25rem;
+}
+
+.totals-avg-switch{
+    display: flex;
+    justify-content: left;
+    margin-left: 13.8rem;
+    margin-top: 1.25rem;
 }
 
 .data-container{

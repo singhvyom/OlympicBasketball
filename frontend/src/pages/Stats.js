@@ -1,6 +1,11 @@
 import React, {useState, useEffect} from 'react';
 import ColorToggleButton from '../components/ColorToggleButton';
 import './Stats.css';
+import { BasicColumns, BasicAvgColumns, ShootingColumns, ShootingAvgColumns,
+    AdvancedColumns, AdvancedAvgColumns, BasicYearColumns, BasicYearAvgColumns,
+    ShootingYearColumns, ShootingYearAvgColumns, AdvancedYearColumns, AdvancedYearAvgColumns,
+    BasicGameColumns, ShootingGameColumns, AdvancedGameColumns
+ } from '../constants/columns';
 import DataTable from '../components/DataTable';
 const Stats = () => {
     // need these buttons
@@ -19,148 +24,464 @@ const Stats = () => {
     //table will allow sorting all these stats, and filter by country
     //stats will be fetched from the backend
 
-    
+    const [careerStats, setCareerStats] = useState([]);
+    const [yearStats, setYearStats] = useState([]);
+    const [gameStats, setGameStats] = useState([]);
 
-    const BasicColumns = [
-        {
-            field: 'player', 
-            headerName: 'Player',
-            width: 150
-        },
-        {
-            field: 'points',
-            headerName: 'Points',
-            width: 110
-        },
-        {
-            field: 'rebounds',
-            headerName: 'Rebounds',
-            width: 110
-        },
-        {
-            field: 'assists',
-            headerName: 'Assists',
-            width: 110
-        },
-        {
-            field: 'steals',
-            headerName: 'Steals',
-            width: 110
-        },
-        {
-            field: 'blocks',
-            headerName: 'Blocks',
-            width: 110
-        },
-        {
-            field: 'turnovers',
-            headerName: 'Turnovers',
-            width: 110
-        },
-        {
-            field: 'fouls',
-            headerName: 'Fouls',
-            width: 110
-        },
-        {
-            field: 'field_goals',
-            headerName: 'Field Goals',
-            width: 110
-        },
-        {
-            field: 'three_pointers',
-            headerName: 'Three Pointers',
-            width: 110
-        },
-        {
-            field: 'free_throws',
-            headerName: 'Free Throws',
-            width: 110
+    useEffect(() => {
+        fetchStats();
+    }, []);
+
+    const fetchStats = async () => {
+        const baseURL = process.env.REACT_APP_BACKEND_URL;
+
+        try{
+            const response = await fetch(`${baseURL}/stats`);
+            const data = await response.json();
+            setCareerStats(data.career_stats);
+            setYearStats(data.yearly_stats);
+            setGameStats(data.game_stats);
+        }catch(error){
+            console.error('Error fetching data: ', error);
         }
-    ]
-    
-    const Statrows = [
-        {id: 1, player: 'Lebron James', points: 27, rebounds: 7, assists: 7, steals: 2, blocks: 1, turnovers: 3, fouls: 2, field_goals: 10, three_pointers: 2, free_throws: 5},
-        {id: 2, player: 'Kevin Durant', points: 25, rebounds: 5, assists: 5, steals: 1, blocks: 2, turnovers: 2, fouls: 3, field_goals: 9, three_pointers: 3, free_throws: 4},
-        {id: 3, player: 'Stephen Curry', points: 30, rebounds: 4, assists: 6, steals: 3, blocks: 0, turnovers: 2, fouls: 2, field_goals: 11, three_pointers: 5, free_throws: 3},
-        {id: 4, player: 'Giannis Antetokounmpo', points: 28, rebounds: 12, assists: 5, steals: 2, blocks: 2, turnovers: 3, fouls: 3, field_goals: 10, three_pointers: 1, free_throws: 7},
-        {id: 5, player: 'Kawhi Leonard', points: 24, rebounds: 6, assists: 4, steals: 2, blocks: 1, turnovers: 2, fouls: 2, field_goals: 9, three_pointers: 2, free_throws: 4},
-        {id: 6, player: 'Anthony Davis', points: 22, rebounds: 10, assists: 3, steals: 2, blocks: 3, turnovers: 2, fouls: 3, field_goals: 8, three_pointers: 1, free_throws: 5},
-        {id: 7, player: 'James Harden', points: 29, rebounds: 6, assists: 8, steals: 2, blocks: 1, turnovers: 4, fouls: 3, field_goals: 10, three_pointers: 3, free_throws: 6},
-        {id: 8, player: 'Luka Doncic', points: 26, rebounds: 8, assists: 7, steals: 2, blocks: 1, turnovers: 3, fouls: 3, field_goals: 9, three_pointers: 2, free_throws: 6},
-        {id: 9, player: 'Damian Lillard', points: 28, rebounds: 4, assists: 8, steals: 1, blocks: 0, turnovers: 3, fouls: 2, field_goals: 10, three_pointers: 4, free_throws: 4},
-        {id: 10, player: 'Nikola Jokic', points: 26, rebounds: 10, assists: 8, steals: 1, blocks: 1, turnovers: 3, fouls: 3, field_goals: 9, three_pointers: 1, free_throws: 7},
-        {id: 11, player: 'Joel Embiid', points: 27, rebounds: 11, assists: 3, steals: 1, blocks: 2, turnovers: 3, fouls: 3, field_goals: 10, three_pointers: 1, free_throws: 6},
-        {id: 12, player: 'Karl-Anthony Towns', points: 24, rebounds: 12, assists: 4, steals: 1, blocks: 2, turnovers: 3, fouls: 3, field_goals: 9, three_pointers: 2, free_throws: 4},
-        {id: 13, player: 'Bradley Beal', points: 30, rebounds: 4, assists: 6, steals: 1, blocks: 0, turnovers: 2, fouls: 2, field_goals: 11, three_pointers: 3, free_throws: 5},
-        {id: 14, player: 'Paul George', points: 25, rebounds: 6, assists: 5, steals: 2, blocks: 1, turnovers: 2, fouls: 2, field_goals: 9, three_pointers: 2, free_throws: 5},
-        {id: 15, player: 'Jayson Tatum', points: 26, rebounds: 7, assists: 5, steals: 1, blocks: 1, turnovers: 2, fouls: 2, field_goals: 10, three_pointers: 3, free_throws: 3},
-        {id: 16, player: 'Jimmy Butler', points: 22, rebounds: 6, assists: 7, steals: 2, blocks: 1, turnovers: 3, fouls: 3, field_goals: 8, three_pointers: 1, free_throws: 5},
-        {id: 17, player: 'Devin Booker', points: 27, rebounds: 4, assists: 5, steals: 1, blocks: 0, turnovers: 2, fouls: 2, field_goals: 11, three_pointers: 3, free_throws: 3},
-        {id: 18, player: 'Donovan Mitchell', points: 25, rebounds: 4, assists: 5, steals: 1, blocks: 0, turnovers: 2, fouls: 2, field_goals: 9, three_pointers: 2, free_throws: 5},
-        {id: 19, player: 'Zion Williamson', points: 23, rebounds: 8, assists: 4, steals: 1, blocks: 1, turnovers: 2, fouls: 3, field_goals: 9, three_pointers: 0, free_throws: 5},
-        {id: 20, player: 'Deandre Ayton', points: 20, rebounds: 10, assists: 2, steals: 1, blocks: 2, turnovers: 2, fouls: 3, field_goals: 8, three_pointers: 0, free_throws: 4},
-    ]
-
-    const [activeMainButton, setActiveMainButton] = useState('Career');
-    const [activeStatButton, setActiveStatButton] = useState('Totals');
-    
-    const handleMainChange = (buttonName) => {
-        setActiveMainButton(buttonName);
     };
+
     
-    const handleStatChange = (buttonName) => {
-        setActiveStatButton(buttonName);
+    
+    const CareerRowsBasic = careerStats.map((stat, index) => ({
+        id: index + 1,
+        player: stat.player,
+        country: stat.country,
+        games: stat.games_played,
+        points: stat.points,
+        minutes: stat.minutes,
+        rebounds: stat.rebounds,
+        assists: stat.assists,
+        steals: stat.steals,
+        blocks: stat.blocks,
+        turnovers: stat.turnovers,
+        fouls: stat.fouls,
+        field_goals: stat.field_goals_made,
+        three_pointers: stat.three_point_field_goals_made,
+        free_throws: stat.free_throws_made
+    }));
+
+    const CareerRowsAvgBasic = careerStats.map((stat, index) => ({
+        id: index + 1,
+        player: stat.player,
+        country: stat.country,
+        games: stat.games_played,
+        points: stat.avg_points,
+        minutes: stat.avg_minutes,
+        rebounds: stat.avg_rebounds,
+        assists: stat.avg_assists,
+        steals: stat.avg_steals,
+        blocks: stat.avg_blocks,
+        turnovers: stat.avg_turnovers,
+        fouls: stat.avg_fouls,
+        field_goals: stat.avg_field_goals_made,
+        three_pointers: stat.avg_three_point_field_goals_made,
+        free_throws: stat.avg_free_throws_made
+    }));
+
+
+    const CareerRowsShooting = careerStats.map((stat, index) => ({
+        id: index + 1,
+        player: stat.player,
+        country: stat.country,
+        games: stat.games_played,
+        field_goals: stat.field_goals_made,
+        field_goals_attempted: stat.field_goals_attempted,
+        field_goal_percentage: stat.field_goal_percentage,
+        three_pointers: stat.three_point_field_goals_made,
+        three_pointers_attempted: stat.three_point_field_goals_attempted,
+        three_point_percentage: stat.three_point_percentage,
+        free_throws: stat.free_throws_made,
+        free_throws_attempted: stat.free_throws_attempted,
+        free_throw_percentage: stat.free_throw_percentage
+    }));
+
+    const CareerRowsShootingAvg = careerStats.map((stat, index) => ({
+        id: index + 1,
+        player: stat.player,
+        country: stat.country,
+        games: stat.games_played,
+        field_goals: stat.avg_field_goals_made,
+        field_goals_attempted: stat.avg_field_goals_attempted,
+        field_goal_percentage: stat.field_goal_percentage,
+        three_pointers: stat.avg_three_point_field_goals_made,
+        three_pointers_attempted: stat.avg_three_point_field_goals_attempted,
+        three_point_percentage: stat.three_point_percentage,
+        free_throws: stat.avg_free_throws_made,
+        free_throws_attempted: stat.avg_free_throws_attempted,
+        free_throw_percentage: stat.free_throw_percentage
+    }));
+
+    const CareerRowsAdvanced = careerStats.map((stat, index) => ({
+        id: index + 1,
+        player: stat.player,
+        country: stat.country,
+        games: stat.games_played,
+        avg_game_score: stat.career_avg_gamescore,
+        effective_field_goal_percentage: stat.career_effective_field_goal_percentage,
+        true_shooting_percentage: stat.career_true_shooting_percentage,
+        field_goals: stat.field_goals_made,
+        field_goals_attempted: stat.field_goals_attempted,
+        field_goal_percentage: stat.field_goal_percentage,
+        three_pointers: stat.three_point_field_goals_made,
+        three_pointers_attempted: stat.three_point_field_goals_attempted,
+        three_point_percentage: stat.three_point_percentage,
+        free_throws: stat.free_throws_made,
+        free_throws_attempted: stat.free_throws_attempted,
+        free_throw_percentage: stat.free_throw_percentage
+    }));
+
+    const CareerRowsAdvancedAvg = careerStats.map((stat, index) => ({
+        id: index + 1,
+        player: stat.player,
+        country: stat.country,
+        games: stat.games_played,
+        avg_game_score: stat.avg_game_score,
+        effective_field_goal_percentage: stat.effective_field_goal_percentage,
+        true_shooting_percentage: stat.true_shooting_percentage,
+        field_goals: stat.field_goals_made,
+        field_goals_attempted: stat.field_goals_attempted,
+        field_goal_percentage: stat.field_goal_percentage,
+        three_pointers: stat.avg_three_point_field_goals_made,
+        three_pointers_attempted: stat.avg_three_point_field_goals_attempted,
+        three_point_percentage: stat.three_point_percentage,
+        free_throws: stat.avg_free_throws_made,
+        free_throws_attempted: stat.avg_free_throws_attempted,
+        free_throw_percentage: stat.free_throw_percentage
+    }));
+
+    const SingleYearRowsBasic = yearStats.map((stat, index) => ({
+        id: index + 1,
+        player: stat.player,
+        country: stat.country,
+        olympic_year: stat.year,
+        games: stat.games_played,
+        points: stat.points,
+        minutes: stat.minutes,
+        rebounds: stat.rebounds,
+        assists: stat.assists,
+        steals: stat.steals,
+        blocks: stat.blocks,
+        turnovers: stat.turnovers,
+        fouls: stat.fouls,
+        field_goals: stat.field_goals_made,
+        three_pointers: stat.three_point_field_goals_made,
+        free_throws: stat.free_throws_made
+    }));
+
+    const SingleYearRowsAvgBasic = yearStats.map((stat, index) => ({
+        id: index + 1,
+        player: stat.player,
+        country: stat.country,
+        olympic_year: stat.year,
+        games: stat.games_played,
+        points: stat.avg_points,
+        minutes: stat.avg_minutes,
+        rebounds: stat.avg_rebounds,
+        assists: stat.avg_assists,
+        steals: stat.avg_steals,
+        blocks: stat.avg_blocks,
+        turnovers: stat.avg_turnovers,
+        fouls: stat.avg_fouls,
+        field_goals: stat.avg_field_goals_made,
+        three_pointers: stat.avg_three_point_field_goals_made,
+        free_throws: stat.avg_free_throws_made
+    }));
+
+    const SingleYearRowsShooting = yearStats.map((stat, index) => ({
+        id: index + 1,
+        player: stat.player,
+        country: stat.country,
+        olympic_year: stat.year,
+        games: stat.games_played,
+        field_goals: stat.field_goals_made,
+        field_goals_attempted: stat.field_goals_attempted,
+        field_goal_percentage: stat.field_goal_percentage,
+        three_pointers: stat.three_point_field_goals_made,
+        three_pointers_attempted: stat.three_point_field_goals_attempted,
+        three_point_percentage: stat.three_point_percentage,
+        free_throws: stat.free_throws_made,
+        free_throws_attempted: stat.free_throws_attempted,
+        free_throw_percentage: stat.free_throw_percentage
+    }));
+
+    const SingleYearRowsShootingAvg = yearStats.map((stat, index) => ({
+        id: index + 1,
+        player: stat.player,
+        country: stat.country,
+        olympic_year: stat.year,
+        games: stat.games_played,
+        field_goals: stat.avg_field_goals_made,
+        field_goals_attempted: stat.avg_field_goals_attempted,
+        field_goal_percentage: stat.field_goal_percentage,
+        three_pointers: stat.avg_three_point_field_goals_made,
+        three_pointers_attempted: stat.avg_three_point_field_goals_attempted,
+        three_point_percentage: stat.three_point_percentage,
+        free_throws: stat.avg_free_throws_made,
+        free_throws_attempted: stat.avg_free_throws_attempted,
+        free_throw_percentage: stat.free_throw_percentage
+    }));
+
+    const SingleYearRowsAdvanced = yearStats.map((stat, index) => ({
+        id: index + 1,
+        player: stat.player,
+        country: stat.country,
+        olympic_year: stat.year,
+        games: stat.games_played,
+        avg_game_score: stat.avg_gamescore,
+        effective_field_goal_percentage: stat.effective_field_goal_percentage,
+        true_shooting_percentage: stat.true_shooting_percentage,
+        field_goals: stat.field_goals_made,
+        field_goals_attempted: stat.field_goals_attempted,
+        field_goal_percentage: stat.field_goal_percentage,
+        three_pointers: stat.three_point_field_goals_made,
+        three_pointers_attempted: stat.three_point_field_goals_attempted,
+        three_point_percentage: stat.three_point_percentage,
+        free_throws: stat.free_throws_made,
+        free_throws_attempted: stat.free_throws_attempted,
+        free_throw_percentage: stat.free_throw_percentage
+    }));
+
+    const SingleYearRowsAdvancedAvg = yearStats.map((stat, index) => ({
+        id: index + 1,
+        player: stat.player,
+        country: stat.country,
+        olympic_year: stat.year,
+        games: stat.games_played,
+        avg_game_score: stat.avg_game_score,
+        effective_field_goal_percentage: stat.effective_field_goal_percentage,
+        true_shooting_percentage: stat.true_shooting_percentage,
+        field_goals: stat.field_goals_made,
+        field_goals_attempted: stat.field_goals_attempted,
+        field_goal_percentage: stat.field_goal_percentage,
+        three_pointers: stat.avg_three_point_field_goals_made,
+        three_pointers_attempted: stat.avg_three_point_field_goals_attempted,
+        three_point_percentage: stat.three_point_percentage,
+        free_throws: stat.avg_free_throws_made,
+        free_throws_attempted: stat.avg_free_throws_attempted,
+        free_throw_percentage: stat.free_throw_percentage
+    }));
+
+    const SingleGameRowsBasic = gameStats.map((stat, index) => ({
+        id: index + 1,
+        player: stat.player,
+        country: stat.country,
+        date: stat.date,
+        olympic_year: stat.year,
+        opponent: stat.opponent,
+        minutes: stat.minutes,
+        points: stat.points,
+        rebounds: stat.rebounds,
+        assists: stat.assists,
+        steals: stat.steals,
+        blocks: stat.blocks,
+        turnovers: stat.turnovers,
+        fouls: stat.fouls,
+        field_goals: stat.field_goals_made,
+        three_pointers: stat.three_point_field_goals_made,
+        free_throws: stat.free_throws_made
+    }));
+
+    const SingleGameRowsShooting = gameStats.map((stat, index) => ({
+        id: index + 1,
+        player: stat.player,
+        country: stat.country,
+        date: stat.date,
+        olympic_year: stat.year,
+        opponent: stat.opponent,
+        minutes: stat.minutes,
+        field_goals: stat.field_goals_made,
+        field_goals_attempted: stat.field_goals_attempted,
+        field_goal_percentage: stat.field_goal_percentage,
+        three_pointers: stat.three_point_field_goals_made,
+        three_pointers_attempted: stat.three_point_field_goals_attempted,
+        three_point_percentage: stat.three_point_percentage,
+        free_throws: stat.free_throws_made,
+        free_throws_attempted: stat.free_throws_attempted,
+        free_throw_percentage: stat.free_throw_percentage
+    }));
+
+    const SingleGameRowsAdvanced = gameStats.map((stat, index) => ({
+        id: index + 1,
+        player: stat.player,
+        country: stat.country,
+        date: stat.date,
+        olympic_year: stat.year,
+        opponent: stat.opponent,
+        game_score: stat.gamescore,
+        effective_field_goal_percentage: stat.effective_field_goal_percentage,
+        true_shooting_percentage: stat.true_shooting_percentage,
+        field_goals: stat.field_goals_made,
+        field_goals_attempted: stat.field_goals_attempted,
+        field_goal_percentage: stat.field_goal_percentage,
+        three_pointers: stat.three_point_field_goals_made,
+        three_pointers_attempted: stat.three_point_field_goals_attempted,
+        three_point_percentage: stat.three_point_percentage,
+        free_throws: stat.free_throws_made,
+        free_throws_attempted: stat.free_throws_attempted,
+        free_throw_percentage: stat.free_throw_percentage
+    }));
+
+
+    const [statsType, setstatsTyoe] = useState('Career');
+    const [statCategory, setstatCategory] = useState('Basic');
+    const [toggle, setToggle] = useState('Totals'); 
+    const [columns, setColumns] = useState(BasicColumns);
+    const [rows, setRows] = useState(CareerRowsBasic);
+
+    const handleToggleChange = (newToggle) => {
+        if (statsType === 'Single Game') {
+            setToggle('Totals');
+        } else {
+            setToggle(newToggle);
+        }
     }
+    useEffect(() => {
+        getColumnsAndRows();
+    },);
+
+    const getColumnsAndRows = () => {
+        const totals = toggle === 'Totals';
+        switch(statsType){
+            case 'Career':
+                switch(statCategory){
+                    case 'Basic':
+                        setColumns(totals ? BasicColumns : BasicAvgColumns);
+                        setRows(totals ? CareerRowsBasic : CareerRowsAvgBasic);
+                        break;
+                    case 'Shooting':
+                        setColumns(totals ? ShootingColumns : ShootingAvgColumns);
+                        setRows(totals ? CareerRowsShooting : CareerRowsShootingAvg);
+                        break;
+                    case 'Advanced':
+                        setColumns(totals ? AdvancedColumns : AdvancedAvgColumns);
+                        setRows(totals ? CareerRowsAdvanced : CareerRowsAdvancedAvg);
+                        break;
+                }
+                break;
+
+            case 'Single Year':
+                switch(statCategory){
+                    case 'Basic':
+                        setColumns(totals ? BasicYearColumns : BasicYearAvgColumns);
+                        setRows(totals ? SingleYearRowsBasic : SingleYearRowsAvgBasic);
+                        break;
+                    case 'Shooting':
+                        setColumns(totals ? ShootingYearColumns : ShootingYearAvgColumns);
+                        setRows(totals ? SingleYearRowsShooting : SingleYearRowsShootingAvg);
+                        break;
+                    case 'Advanced':
+                        setColumns(totals ? AdvancedYearColumns : AdvancedYearAvgColumns);
+                        setRows(totals ? SingleYearRowsAdvanced : SingleYearRowsAdvancedAvg);
+                        break;
+                }
+                break;
+
+            case 'Single Game':
+                switch(statCategory){
+                    case 'Basic':
+                        setColumns(BasicGameColumns);
+                        setRows(SingleGameRowsBasic);
+                        break;
+                    case 'Shooting':
+                        setColumns(ShootingGameColumns);
+                        setRows(SingleGameRowsShooting);
+                        break;
+                    case 'Advanced':
+                        setColumns(AdvancedGameColumns);
+                        setRows(SingleGameRowsAdvanced);
+                        break;
+                }
+                break;
+
+            default:
+                break;
+        }
+    };
 
 
     return (
         <div>
             <h1>View Stats</h1>
 
+            {/* Main buttons */}
             <div className='options-container'>
                 <button 
-                    className={`stat_button ${activeMainButton === 'Career' ? 'active' : ''}`} 
+                    className={`stat_button ${statsType === 'Career' ? 'active' : ''}`} 
                     type='button'
-                    onClick={() => handleMainChange('Career')}
+                    onClick={() => setstatsTyoe('Career')}
                 >
                     Career
                 </button>
                 <button 
-                    className={`stat_button ${activeMainButton === 'Single Year' ? 'active' : ''}`} 
+                    className={`stat_button ${statsType === 'Single Year' ? 'active' : ''}`} 
                     type='button'
-                    onClick={() => handleMainChange('Single Year')}
+                    onClick={() => setstatsTyoe('Single Year')}
                 >
                     Single Year
                 </button>
                 <button 
-                    className={`stat_button ${activeMainButton === 'Single Game' ? 'active' : ''}`} 
+                    className={`stat_button ${statsType === 'Single Game' ? 'active' : ''}`} 
                     type='button'
-                    onClick={() => handleMainChange('Single Game')}
+                    onClick={() => setstatsTyoe('Single Game')}
                 >
                     Single Game
                 </button>
             </div>
 
-            <div className='totals-or-avg-buttons'>
+            {/* Stat option buttons */}
+            <div className='basic-shooting-adv-buttons'>
                 <button 
-                    className={`stat_button ${activeStatButton === 'Totals' ? 'active' : ''}`} 
+                    className={`stat_button ${statCategory === 'Basic' ? 'active' : ''}`} 
                     type='button'
-                    onClick={() => handleStatChange('Totals')}
+                    onClick={() => setstatCategory('Basic')}
                 >
-                    Totals
+                    Basic
                 </button>
                 <button 
-                    className={`stat_button ${activeStatButton === 'Per Game Avg' ? 'active' : ''}`}
+                    className={`stat_button ${statCategory === 'Shooting' ? 'active' : ''}`}
                     type='button'
-                    onClick={() => handleStatChange('Per Game Avg')}
+                    onClick={() => setstatCategory('Shooting')}
                 >
-                    Per Game Avg
+                    Shooting
+                </button>
+                <button 
+                    className={`stat_button ${statCategory === 'Advanced' ? 'active' : ''}`}
+                    type='button'
+                    onClick={() => setstatCategory('Advanced')}
+                >
+                    Advanced
                 </button>
             </div>
 
+            {/* Totals/Averages switch */}
+            <div className='totals-avg-switch'>
+                <label>
+                    <input
+                        type="checkbox"
+                        checked={toggle === 'Totals'}
+                        onChange={() => handleToggleChange('Totals')}
+                    />
+                    Totals
+                </label>
+                <label>
+                    <input
+                        type="checkbox"
+                        checked={toggle === 'Avg'}
+                        onChange={() => handleToggleChange('Avg')}
+                    />
+                    Avg
+                </label>
+            </div>
+
+            {/* Data Tabel */}
             <div className = 'data-container'>
-                <DataTable rows={Statrows} columns={BasicColumns} />
+                <DataTable rows={rows} columns={columns} />
             </div>
 
 
