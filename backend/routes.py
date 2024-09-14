@@ -462,11 +462,19 @@ def stat_leaders():
 
     
     return jsonify(stats)
-    # return 'This is the stat leaders route'
 
 @app.route('/team_stats', methods=['GET'])
 def team_stats():
     return 'This is the team stats route'
+
+
+@app.route('/query', methods=['POST'])
+def query():
+    data = request.json
+    user_query = data.get('query')
+    
+
+    return jsonify({'message': f"Query received: {user_query}"})
 
 if __name__ == '__main__':
     with app.app_context():
