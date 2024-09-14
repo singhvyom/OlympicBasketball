@@ -1,5 +1,4 @@
 import React, {useState, useEffect} from 'react';
-import ColorToggleButton from '../components/ColorToggleButton';
 import './Stats.css';
 import { BasicColumns, BasicAvgColumns, ShootingColumns, ShootingAvgColumns,
     AdvancedColumns, AdvancedAvgColumns, BasicYearColumns, BasicYearAvgColumns,
@@ -8,21 +7,6 @@ import { BasicColumns, BasicAvgColumns, ShootingColumns, ShootingAvgColumns,
  } from '../constants/columns';
 import DataTable from '../components/DataTable';
 const Stats = () => {
-    // need these buttons
-    // Career, Single Year, Single Game
-    //smaller buttons for per game avg or totals (not on single game)
-    // Career is just each player all time stats
-        // display name with country
-    //Single Year is just each player stats per year ranked
-        //players can appear twice, for each year they played
-        // display name with country and year before stats
-    //Single Game is just each player stats per game ranked
-        // display name with country and game date + opponent before stats
-    // display stats in table
-    //give options for basic, shooting, advanced stats
-        //gamescore available for single game
-    //table will allow sorting all these stats, and filter by country
-    //stats will be fetched from the backend
 
     const [careerStats, setCareerStats] = useState([]);
     const [yearStats, setYearStats] = useState([]);
@@ -479,7 +463,7 @@ const Stats = () => {
                 </label>
             </div>
 
-            {/* Data Tabel */}
+            {/* Data Table */}
             <div className = 'data-container'>
                 <DataTable rows={rows} columns={columns} />
             </div>
