@@ -1,11 +1,10 @@
 import * as React from 'react';
-import Box from '@mui/material/Box';
 import { DataGrid } from '@mui/x-data-grid';
 
 const DataTable = ({rows, columns})=>{
 
     return(
-        // <Box sx={{ height: 700, width: '85%'}} >
+        
         <div style={{height: 700, width: '75%'}}>
             <DataGrid
                 rows={rows}
@@ -21,7 +20,7 @@ const DataTable = ({rows, columns})=>{
                 disableRowSelectionOnClick
             />
         </div>
-        // </Box>
+        
     
     )
     

@@ -125,11 +125,11 @@ const Stats = () => {
         player: stat.player,
         country: stat.country,
         games: stat.games_played,
-        avg_game_score: stat.avg_game_score,
-        effective_field_goal_percentage: stat.effective_field_goal_percentage,
-        true_shooting_percentage: stat.true_shooting_percentage,
-        field_goals: stat.field_goals_made,
-        field_goals_attempted: stat.field_goals_attempted,
+        effective_field_goal_percentage: stat.career_effective_field_goal_percentage,
+        true_shooting_percentage: stat.career_true_shooting_percentage,
+        avg_game_score: stat.career_avg_gamescore,
+        field_goals: stat.avg_field_goals_made,
+        field_goals_attempted: stat.avg_field_goals_attempted,
         field_goal_percentage: stat.field_goal_percentage,
         three_pointers: stat.avg_three_point_field_goals_made,
         three_pointers_attempted: stat.avg_three_point_field_goals_attempted,
@@ -237,7 +237,7 @@ const Stats = () => {
         country: stat.country,
         olympic_year: stat.year,
         games: stat.games_played,
-        avg_game_score: stat.avg_game_score,
+        avg_game_score: stat.avg_gamescore,
         effective_field_goal_percentage: stat.effective_field_goal_percentage,
         true_shooting_percentage: stat.true_shooting_percentage,
         field_goals: stat.field_goals_made,
@@ -346,6 +346,9 @@ const Stats = () => {
                         setColumns(totals ? AdvancedColumns : AdvancedAvgColumns);
                         setRows(totals ? CareerRowsAdvanced : CareerRowsAdvancedAvg);
                         break;
+                    default:
+                        console.error('Invalid stat category');
+                        break;
                 }
                 break;
 
@@ -363,6 +366,9 @@ const Stats = () => {
                         setColumns(totals ? AdvancedYearColumns : AdvancedYearAvgColumns);
                         setRows(totals ? SingleYearRowsAdvanced : SingleYearRowsAdvancedAvg);
                         break;
+                    default:
+                        console.error('Invalid stat category');
+                        break;
                 }
                 break;
 
@@ -379,6 +385,9 @@ const Stats = () => {
                     case 'Advanced':
                         setColumns(AdvancedGameColumns);
                         setRows(SingleGameRowsAdvanced);
+                        break;
+                    default:
+                        console.error('Invalid stat category');
                         break;
                 }
                 break;
