@@ -1,0 +1,49 @@
+.options-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.stat_button {
+    background-color: #f5f5f5;
+    border: 1px solid #f5f5f5;
+    color: #000;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.stat_button:hover {
+    background-color: #8a8989;
+    color: #f5f5f5;
+}
+
+.stat_button.active {
+    background-color: #000;
+    color: #f5f5f5;
+}
+
+.basic-shooting-adv-buttons{
+    display: flex;
+    justify-content: center;
+    margin-top: 1.25rem;
+}
+
+.totals-avg-switch{
+    display: flex;
+    justify-content: left;
+    margin-left: 13.8rem;
+    margin-top: 1.25rem;
+}
+
+.data-container{
+    display: flex;
+    justify-content: center;
+    margin-top: 1.25rem;
+    margin-bottom: 3rem;
+}
