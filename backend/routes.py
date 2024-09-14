@@ -115,7 +115,10 @@ def home():
 @app.route('/scores/<int:year>', methods=['GET'])
 def scores(year):
     #use json to construct scores, no need to query
-    file_path = f'backend/box_scores/box_scores_{year}.json'
+    # file_path = f'backend/box_scores/box_scores_{year}.json'
+
+    base_dir = os.path.dirname(os.path.abspath(__file__))  # Get the current file's directory
+    file_path = os.path.join(base_dir, 'box_scores', f'box_scores_{year}.json')
 
     if not os.path.exists(file_path):
         return jsonify({'message': 'Year not found'}), 404
@@ -174,7 +177,9 @@ def boxscore(year, hometeam_vs_awayteam_date):
         return jsonify({'message': 'Invalid URL format', 'error': str(e)}), 400
     
 
-    file_path = f'backend/box_scores/box_scores_{year}.json'
+    # file_path = f'backend/box_scores/box_scores_{year}.json'
+    base_dir = os.path.dirname(os.path.abspath(__file__))  # Get the current file's directory
+    file_path = os.path.join(base_dir, 'box_scores', f'box_scores_{year}.json')
 
     with open(file_path, 'r') as f:
         data = json.load(f)
