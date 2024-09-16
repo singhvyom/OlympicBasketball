@@ -6,6 +6,7 @@ import './Query.css';
 const Query = () => {
     const [query, setQuery] = useState('');
     const [response, setResponse] = useState('');
+    const [loading, setLoading] = useState(false);
 
     const handleInputChange = (event) => {
         setQuery(event.target.value);
@@ -13,6 +14,7 @@ const Query = () => {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
+        setLoading(true);
         const baseURL = process.env.REACT_APP_BACKEND_URL;
         try{
             const response = await fetch(`${baseURL}/query`, {
@@ -23,10 +25,12 @@ const Query = () => {
                 body: JSON.stringify({query: query}),
             });
             const data = await response.json();
-            setResponse(data.message);
+            setResponse(data.result);
         }catch(error){
             console.error(error);
             setResponse('An error occurred, please try again later');
+        } finally {
+            setLoading(false);
         }
 
     };
