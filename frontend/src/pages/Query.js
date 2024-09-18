@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
+import LinearProgress from '@mui/material/LinearProgress';
 import './Query.css';
 
 const Query = () => {
@@ -40,7 +41,8 @@ const Query = () => {
 
     return (
         <div className='query-container'>
-            <h1>Search for Stats, Scores,</h1>
+            <h1>Search for Stats, Scores, & More!</h1>
+            <h3>*queries may require more specific prompts for accurate results*</h3>
 
             <div className='textfield-container'>
                 <Box sx={{width: 500, maxWidth: '100%'}}>
@@ -54,7 +56,18 @@ const Query = () => {
                     />
                     <button onClick={handleSubmit}>Submit</button>
                 </Box>
-                {<p>{response}</p>}
+                {loading? (
+                    <div className='progress-bar-container'>
+                        <p>Thinking...</p>
+                        <LinearProgress color='inherit' />
+                    </div>
+                ): (
+                    <div classname='respinse-container'>
+                        {<p>{response}</p>}
+                    </div>
+                    
+                )}
+                
             </div>
 
         </div>

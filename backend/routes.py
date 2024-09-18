@@ -479,7 +479,7 @@ database_uri = os.getenv('DATABASE_URL')
 engine = create_engine(database_uri)
 database = SQLDatabase(engine)
 
-llm = ChatOpenAI(model_name='gpt-4', temperature=0, openai_api_key=openai_api_key)
+llm = ChatOpenAI(model_name='gpt-3.5-turbo', temperature=0, openai_api_key=openai_api_key)
 
 toolkit = SQLDatabaseToolkit(llm=llm, db=database)
 executor = create_sql_agent(
@@ -493,11 +493,18 @@ def query():
 
         data = request.json
         user_query = data.get('query')
+        enhancement = '''
+                        When returning the results of this query use full player names or team names.
+                        With a player_id you can find the corresponding name in the Players table with player_id
+                        With a team_id you can find the corresponding name of the team in the Teams table with country_name
+                    '''
+        enhanced_query = enhancement + "\n" + user_query
+        result = executor.invoke(enhanced_query)
 
-        result = executor.invoke(user_query)
         result_output = result.get('output', '')
-        print(f'RESULT: {result_output}')
-        print(type(result_output))
+       
+        # print(f'RESULT: {result_output}')
+        # print(type(result_output))
 
         return jsonify({
                 'message': f'Query received: {user_query}', 
