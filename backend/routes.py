@@ -474,8 +474,14 @@ def team_stats():
 
 
 openai_api_key = os.getenv('OPENAI_API_KEY')
-
+#make sure database url starts with postgresql://
 database_uri = os.getenv('DATABASE_URL')
+
+# If DATABASE_URL uses `postgres://`, replace it with `postgresql://`
+if database_uri and database_uri.startswith('postgres://'):
+    database_uri = database_uri.replace('postgres://', 'postgresql://', 1)
+
+# database_uri = os.getenv('DATABASE_URL')
 engine = create_engine(database_uri)
 database = SQLDatabase(engine)
 
