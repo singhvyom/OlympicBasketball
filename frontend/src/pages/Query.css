@@ -1,0 +1,45 @@
+.textfield-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    /* height: 10rem; */
+    margin-top: 1rem;
+    margin-bottom: 2rem;
+}
+.query-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.query-container h3 {
+    justify-content: center;
+    font-size: 1.125rem;
+    font-style: italic;
+    color: grey;
+    margin-top: -0.5rem;
+}
+
+button {
+    margin-top: .5rem;
+    background-color: #4CAF50; /* Green background */
+    border: none; 
+    color: white; /* White text */
+    padding: 12px 24px; /* Padding around the text */
+    font-size: 14px; /* Text size */
+    border-radius: 8px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor on hover */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Add shadow */
+    transition: background-color 0.3s ease, transform 0.3s ease; /* Smooth hover effect */
+}
+
+button:hover {
+    background-color: #45a049; /* Darker green on hover */
+    transform: translateY(-2px); /* Slight lift effect on hover */
+}
+
+button:active {
+    background-color: #3e8e41; /* Even darker green on click */
+    transform: translateY(0); /* Reset lift effect on click */
+}

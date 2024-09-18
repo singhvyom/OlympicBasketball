@@ -6,6 +6,11 @@ import json
 from models import Olympics, Teams, Players, PlayerTeam, Games, BoxScores, TeamStats, Medals
 from sqlalchemy import func,and_, case
 from sqlalchemy.orm import aliased
+from langchain_community.agent_toolkits.sql.base import create_sql_agent
+from langchain_openai import ChatOpenAI
+from langchain_community.utilities import SQLDatabase
+from langchain_community.agent_toolkits.sql.toolkit import SQLDatabaseToolkit
+from sqlalchemy import create_engine
 
 # @app.route('/')
 # def serve_react_app():
@@ -462,11 +467,54 @@ def stat_leaders():
 
     
     return jsonify(stats)
-    # return 'This is the stat leaders route'
 
 @app.route('/team_stats', methods=['GET'])
 def team_stats():
     return 'This is the team stats route'
+
+
+openai_api_key = os.getenv('OPENAI_API_KEY')
+
+database_uri = os.getenv('DATABASE_URL')
+engine = create_engine(database_uri)
+database = SQLDatabase(engine)
+
+llm = ChatOpenAI(model_name='gpt-3.5-turbo', temperature=0, openai_api_key=openai_api_key)
+
+toolkit = SQLDatabaseToolkit(llm=llm, db=database)
+executor = create_sql_agent(
+    llm=llm,
+    toolkit=toolkit,
+    verbose=True
+)
+@app.route('/query', methods=['POST'])
+def query():
+    try:
+
+        data = request.json
+        user_query = data.get('query')
+        enhancement = '''
+                        When returning the results of this query use full player names or team names.
+                        With a player_id you can find the corresponding name in the Players table with player_id
+                        With a team_id you can find the corresponding name of the team in the Teams table with country_name
+                    '''
+        enhanced_query = enhancement + "\n" + user_query
+        result = executor.invoke(enhanced_query)
+
+        result_output = result.get('output', '')
+       
+        # print(f'RESULT: {result_output}')
+        # print(type(result_output))
+
+        return jsonify({
+                'message': f'Query received: {user_query}', 
+                'result': result_output
+            })
+    
+    except Exception as e:
+        print(f'Error: {e}')
+        return jsonify({'message': f'An error occurred: {str(e)}'}), 500
+
 
 if __name__ == '__main__':
     with app.app_context():
