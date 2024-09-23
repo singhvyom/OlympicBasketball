@@ -102,40 +102,6 @@ def load_data(cur, date, date2):
     filtered_games = filter_games_by_date(games, date, date2)
     load_box_execution(cur, filtered_games)
 
-# def insert_olympics_data(cur, year, location):
-#     # Check if the year already exists
-#     cur.execute("""
-#         SELECT EXISTS (
-#             SELECT 1 
-#             FROM Olympics 
-#             WHERE year = %s
-#         );
-#     """, (year,))
-    
-#     exists = cur.fetchone()[0]
-    
-#     if not exists:
-#         # Insert data if it doesn't exist
-#         cur.execute("""
-#             INSERT INTO Olympics (year, location) 
-#             VALUES (%s, %s);
-#         """, (year, location))
-#         print(f"Inserted data for year {year} with location {location}.")
-#     else:
-#         print(f"Data for year {year} already exists.")
-
-def insert_2024_results(cur):
-    year = 2024
-    gold = 'USA'
-    silver = 'France'
-    bronze = 'Serbia'
-    fourth = 'Germany'
-
-    cur.execute("""
-        INSERT INTO MEDALS (year, gold, silver, bronze, fourth)
-        VALUES (%s, %s, %s, %s, %s);
-        """, (year, gold, silver, bronze, fourth))
-    
 
 def main(date, date2):
 
@@ -152,7 +118,7 @@ def main(date, date2):
 
             with conn.cursor() as cur:
                 logging.info("Connected to the database")
-                insert_2024_results(cur)
+                # insert_2024_results(cur)
                 
                 logging.info("Loading box score data...")
                 load_data(cur, date, date2)

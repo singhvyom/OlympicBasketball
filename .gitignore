@@ -3,7 +3,8 @@ box_score_urls/
 backend/utils/
 urls.py
 processed_urls.json
-
+serbia_sudan_boxscore.json
+singleGameLoad.py
 
 config.json
 .env
