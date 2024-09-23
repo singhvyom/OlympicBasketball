@@ -49,7 +49,7 @@ const Query = () => {
                     <TextField
                         id='outlined-multiline-static'
                         label='Enter your query here'
-                        placeholder='Ex: Who is the all time leading scorer from the USA?'
+                        placeholder='Ex: Who scored the most points in a single game?'
                         value={query}
                         onChange={handleInputChange}
                         fullWidth
