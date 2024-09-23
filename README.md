@@ -5,11 +5,18 @@ Currently looking at Olympic Basketball data requires looking at different sites
 - Scrape data from various sources + manual entry
 - Transform by adding additional and advanced stats
 - Load into PostgreSQL database with 8 relational tables
+- All done in Python
+
 ### Build Backend
-- Flask powered backend with different routes for various queries 
+- Flask powered backend with different routes for various DB queries
 - SQLAlchemy for database connection
-- Hosted on Heroku 
-    - Heroku Postgres add-on for db
+- Langchain for NLP queries (under Query tab)
+
 ### Build Frontend
 - Frontend developed in React.js
-- Hosted with Netlify 
+
+### Hosting
+- Backend hosted on Heroku
+    - subdir buildpack used to only use the backend folder
+- Frontend hosted on Netlify
+- appropiate env variables set in both Heroku and Netlify 
